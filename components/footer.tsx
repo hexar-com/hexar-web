@@ -32,6 +32,7 @@ export function Footer() {
               </p>
 
               {/* Social Links */}
+              {/*
               <div className="flex gap-4">
                 <Button
                   variant="ghost"
@@ -55,6 +56,7 @@ export function Footer() {
                   <Twitter className="h-5 w-5" />
                 </Button>
               </div>
+              */}
             </div>
 
             {/* Quick Links */}

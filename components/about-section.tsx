@@ -62,7 +62,7 @@ export function AboutSection() {
                   <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
                     <Users className="h-8 w-8 text-accent" />
                   </div>
-                  <h4 className="text-2xl font-bold text-primary mb-2">50+</h4>
+                  <h4 className="text-2xl font-bold text-primary mb-2">100%</h4>
                   <p className="text-muted-foreground">Proyectos Completados</p>
                 </CardContent>
               </Card>

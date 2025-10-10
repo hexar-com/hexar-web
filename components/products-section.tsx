@@ -123,7 +123,7 @@ export function ProductsSection() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="text-center">
-                <div className="text-3xl font-bold text-accent mb-2">1,500+</div>
+                <div className="text-3xl font-bold text-accent mb-2">500+</div>
                 <div className="text-muted-foreground">Usuarios Activos</div>
               </div>
               <div className="text-center">
