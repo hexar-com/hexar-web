@@ -11,6 +11,9 @@ export const metadata: Metadata = {
   description:
     "Creamos soluciones de software completas, gestionamos bases de datos y desarrollamos productos innovadores. Tu socio tecnológico de confianza.",
   generator: "Hexar Software Factory",
+  icons: {
+    icon: "/images/favicon.ico",
+  },
 }
 
 export default function RootLayout({
@@ -26,7 +29,6 @@ export default function RootLayout({
         <meta name="keywords" content="Hexar, Software Factory, Desarrollo de Software, Soluciones de Software, Gestión de Bases de Datos, Productos de Software, Innovación Tecnológica" />
         <meta name="author" content="Hexar Software Factory" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="shortcut icon" href="/images/favicon.ico" />
       </head>
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
         <Suspense fallback={null}>{children}</Suspense>
