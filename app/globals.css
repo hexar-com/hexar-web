@@ -4,75 +4,85 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Updated color tokens for Hexar Software Factory branding */
+  /* Hexar blue palette — light mode */
   --background: #ffffff;
-  --foreground: #1f2937;
-  --card: #f1f5f9;
-  --card-foreground: #374151;
+  --foreground: #0F1F2E;
+  /* Cards and surfaces: pale blue tint, not gray */
+  --card: #E4F2FA;
+  --card-foreground: #0F1F2E;
   --popover: #ffffff;
-  --popover-foreground: #1f2937;
-  --primary: #1f2937;
+  --popover-foreground: #0F1F2E;
+  --primary: #0F1F2E;
   --primary-foreground: #ffffff;
-  --secondary: #6b7280;
+  /* Secondary uses a visible mid-blue, not gray */
+  --secondary: #1F5F8B;
   --secondary-foreground: #ffffff;
-  --muted: #f1f5f9;
-  --muted-foreground: #374151;
-  --accent: #8b5cf6;
+  /* Muted sections share the pale blue wash */
+  --muted: #E4F2FA;
+  --muted-foreground: #1F5F8B;
+  /* Main accent: mid-bright blue */
+  --accent: #2E7DB2;
   --accent-foreground: #ffffff;
   --destructive: #ef4444;
   --destructive-foreground: #ffffff;
-  --border: #e5e7eb;
-  --input: #f1f5f9;
-  --ring: rgba(139, 92, 246, 0.5);
-  --chart-1: #2563eb;
-  --chart-2: #f97316;
-  --chart-3: #10b981;
-  --chart-4: #7e22ce;
-  --chart-5: #eab308;
+  /* Borders: light-blue, not gray */
+  --border: #A8D4EC;
+  --input: #EEF7FC;
+  --ring: rgba(46, 125, 178, 0.5);
+  --chart-1: #1F5F8B;
+  --chart-2: #4FA3D1;
+  --chart-3: #8FD3F4;
+  --chart-4: #2E7DB2;
+  --chart-5: #132A3A;
   --radius: 0.5rem;
-  --sidebar: #f1f5f9;
-  --sidebar-foreground: #374151;
-  --sidebar-primary: #1f2937;
+  --sidebar: #E4F2FA;
+  --sidebar-foreground: #0F1F2E;
+  --sidebar-primary: #0F1F2E;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #8b5cf6;
+  --sidebar-accent: #2E7DB2;
   --sidebar-accent-foreground: #ffffff;
-  --sidebar-border: #e5e7eb;
-  --sidebar-ring: rgba(139, 92, 246, 0.5);
+  --sidebar-border: #A8D4EC;
+  --sidebar-ring: rgba(46, 125, 178, 0.5);
 }
 
 .dark {
-  --background: #0f172a;
-  --foreground: #f1f5f9;
-  --card: #1e293b;
-  --card-foreground: #f1f5f9;
-  --popover: #1e293b;
-  --popover-foreground: #f1f5f9;
-  --primary: #f1f5f9;
-  --primary-foreground: #0f172a;
-  --secondary: #475569;
-  --secondary-foreground: #f1f5f9;
-  --muted: #1e293b;
-  --muted-foreground: #94a3b8;
-  --accent: #a855f7;
-  --accent-foreground: #f1f5f9;
+  /* Hexar blue palette — dark mode */
+  --background: #0F1F2E;
+  --foreground: #D9E1E8;
+  /* Cards: slightly lighter deep blue, clearly blue not charcoal */
+  --card: #132A3A;
+  --card-foreground: #D9E1E8;
+  --popover: #132A3A;
+  --popover-foreground: #D9E1E8;
+  --primary: #8FD3F4;
+  --primary-foreground: #0F1F2E;
+  /* Secondary: mid blue, visible against dark bg */
+  --secondary: #1F5F8B;
+  --secondary-foreground: #D9E1E8;
+  --muted: #132A3A;
+  --muted-foreground: #8FD3F4;
+  /* Accent: bright light blue for pop */
+  --accent: #4FA3D1;
+  --accent-foreground: #0F1F2E;
   --destructive: #ef4444;
-  --destructive-foreground: #f1f5f9;
-  --border: #334155;
-  --input: #1e293b;
-  --ring: rgba(168, 85, 247, 0.5);
-  --chart-1: #3b82f6;
-  --chart-2: #f97316;
-  --chart-3: #10b981;
-  --chart-4: #a855f7;
-  --chart-5: #eab308;
-  --sidebar: #1e293b;
-  --sidebar-foreground: #f1f5f9;
-  --sidebar-primary: #f1f5f9;
-  --sidebar-primary-foreground: #0f172a;
-  --sidebar-accent: #a855f7;
-  --sidebar-accent-foreground: #f1f5f9;
-  --sidebar-border: #334155;
-  --sidebar-ring: rgba(168, 85, 247, 0.5);
+  --destructive-foreground: #D9E1E8;
+  /* Borders: visible mid blue, not gray */
+  --border: #1F5F8B;
+  --input: #132A3A;
+  --ring: rgba(79, 163, 209, 0.5);
+  --chart-1: #4FA3D1;
+  --chart-2: #8FD3F4;
+  --chart-3: #2E7DB2;
+  --chart-4: #1F5F8B;
+  --chart-5: #BFC7CE;
+  --sidebar: #132A3A;
+  --sidebar-foreground: #D9E1E8;
+  --sidebar-primary: #8FD3F4;
+  --sidebar-primary-foreground: #0F1F2E;
+  --sidebar-accent: #4FA3D1;
+  --sidebar-accent-foreground: #0F1F2E;
+  --sidebar-border: #1F5F8B;
+  --sidebar-ring: rgba(79, 163, 209, 0.5);
 }
 
 @theme inline {
@@ -123,4 +133,98 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* ============================================================
+   HEXAR — Motion & Scroll Reveal
+   ============================================================ */
+
+/* --- Orb float paths --- */
+@keyframes floatA {
+  0%, 100% { transform: translate(0, 0); }
+  33%       { transform: translate(32px, -24px); }
+  66%       { transform: translate(-20px, 16px); }
+}
+@keyframes floatB {
+  0%, 100% { transform: translate(0, 0); }
+  40%       { transform: translate(-36px, 20px); }
+  75%       { transform: translate(24px, -28px); }
+}
+@keyframes floatC {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%       { transform: translate(22px, 20px) scale(1.05); }
+}
+
+/* --- Seamless marquee --- */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* --- Field error slide-in --- */
+@keyframes errorSlideDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Dot grid background --- */
+.hex-dot-grid {
+  background-image: radial-gradient(circle, #4FA3D1 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+
+/* --- Floating orb base style --- */
+.anim-orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(80px);
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* --- Scroll reveal --- */
+.reveal-up {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-right {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-up.reveal-visible,
+.reveal-left.reveal-visible,
+.reveal-right.reveal-visible {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+/* --- Field error animation --- */
+.field-error {
+  animation: errorSlideDown 0.2s ease-out;
+}
+
+/* --- Syntax highlighting (code editor showcase) --- */
+.hl-kw   { color: #8FD3F4; font-weight: 600; }
+.hl-str  { color: #FFD580; }
+.hl-cmt  { color: #3B5060; font-style: italic; }
+.hl-type { color: #4FA3D1; }
+.hl-num  { color: #F0A070; }
+
+/* --- Code editor cursor blink --- */
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+.cursor-blink {
+  animation: cursorBlink 0.85s step-end infinite;
 }

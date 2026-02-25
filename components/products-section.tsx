@@ -10,14 +10,14 @@ export function ProductsSection() {
   const products = [
     {
       icon: BarChart3,
-      title: "Handy",
+      title: "Velzo",
       description:
         "Plataforma de busqueda de proveedores de servicios para individuos, facilitando la conexión entre individuos y profesionales.",
       status: "Activo",
       users: "500+ user",
       features: ["Búsqueda avanzada", "Reseñas y calificaciones", "Reservas en línea"],
       category: "Marketplace",
-      link: "https://joinhandy.com/home"
+      link: "https://velzo.com.ar/home"
     }
   ]
 
@@ -54,7 +54,7 @@ export function ProductsSection() {
                   <CardHeader>
                     <div className="flex items-start justify-between mb-4">
                       <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center">
-                        <Image className='w-24 pb-5 m-auto' src='/images/handy-logo.webp' alt='logo' 
+                        <Image className='w-24 pb-5 m-auto' src='/images/velzo-logo.webp' alt='logo' 
                           width={0}
                           height={0}
                           sizes="100vw" />

@@ -12,8 +12,29 @@ export function HeroSection() {
   }
 
   return (
-    <section className="pt-16 pb-20 bg-gradient-to-br from-background to-muted">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="pt-16 pb-20 bg-gradient-to-br from-background to-muted relative overflow-hidden">
+      {/* Animated background */}
+      <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
+        {/* Dot grid */}
+        <div className="absolute inset-0 hex-dot-grid opacity-[0.045]" />
+        {/* Orb 1 — top-left, large, slow */}
+        <div
+          className="anim-orb w-[520px] h-[520px] -top-32 -left-40"
+          style={{ background: "rgba(46,125,178,0.18)", animation: "floatA 14s ease-in-out infinite" }}
+        />
+        {/* Orb 2 — bottom-right, medium */}
+        <div
+          className="anim-orb w-[380px] h-[380px] -bottom-16 -right-24"
+          style={{ background: "rgba(79,163,209,0.13)", animation: "floatB 11s ease-in-out infinite", animationDelay: "-5s" }}
+        />
+        {/* Orb 3 — center, small, fast */}
+        <div
+          className="anim-orb w-[240px] h-[240px] top-[45%] left-[48%]"
+          style={{ background: "rgba(31,95,139,0.14)", animation: "floatC 8s ease-in-out infinite", animationDelay: "-3s" }}
+        />
+      </div>
+
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
           {/* Hero Content */}
           <div className="mb-12 mt-10">

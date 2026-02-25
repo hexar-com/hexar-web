@@ -1,37 +1,95 @@
 "use client"
 
 import type React from "react"
-
-import { useState } from "react"
+import { useRef, useState } from "react"
+import ReCAPTCHA from "react-google-recaptcha"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { Mail, Phone, MapPin, Clock, Send, MessageSquare, Linkedin, Github } from "lucide-react"
+import { Mail, Phone, MapPin, Clock, Send, MessageSquare, AlertCircle } from "lucide-react"
 import ModalSuccess from "./ui/modal-success"
 
+// Animated inline field error — replaces browser tooltip
+function FieldError({ message }: { message: string }) {
+  return (
+    <p className="field-error flex items-center gap-1.5 mt-1.5 text-xs text-destructive">
+      <AlertCircle className="h-3.5 w-3.5 shrink-0" />
+      {message}
+    </p>
+  )
+}
+
+type FormErrors = {
+  name?: string
+  email?: string
+  message?: string
+}
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
 export function ContactSection() {
+  const recaptchaRef = useRef<ReCAPTCHA>(null)
 
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    company: "",
-    message: "",
-  })
+  const [formData, setFormData] = useState({ name: "", email: "", company: "", message: "" })
+  const [errors, setErrors] = useState<FormErrors>({})
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle")
+  const [errorMsg, setErrorMsg] = useState("")
 
-  const [success, setSuccess] = useState(false)
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    setFormData({ name: "", email: "", company: "", message: "" })
-    setSuccess(true)
+  const validate = (): FormErrors => {
+    const e: FormErrors = {}
+    if (!formData.name.trim())    e.name    = "El nombre es requerido."
+    if (!formData.email.trim())   e.email   = "El email es requerido."
+    else if (!EMAIL_RE.test(formData.email)) e.email = "Ingresá un email válido."
+    if (!formData.message.trim()) e.message = "El mensaje es requerido."
+    return e
   }
 
+  // Clear a single field error as the user types
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    })
+    const { name, value } = e.target
+    setFormData(prev => ({ ...prev, [name]: value }))
+    if (errors[name as keyof FormErrors]) {
+      setErrors(prev => ({ ...prev, [name]: undefined }))
+    }
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setErrorMsg("")
+
+    const fieldErrors = validate()
+    if (Object.keys(fieldErrors).length > 0) {
+      setErrors(fieldErrors)
+      return
+    }
+    setErrors({})
+
+    const captchaToken = recaptchaRef.current?.getValue()
+    if (!captchaToken) {
+      setErrorMsg("Por favor, completá el captcha antes de enviar.")
+      return
+    }
+
+    setStatus("loading")
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...formData, captchaToken }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error ?? "Error desconocido")
+
+      setFormData({ name: "", email: "", company: "", message: "" })
+      recaptchaRef.current?.reset()
+      setStatus("success")
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Error al enviar el mensaje. Intentá nuevamente."
+      setErrorMsg(message)
+      recaptchaRef.current?.reset()
+      setStatus("error")
+    }
   }
 
   return (
@@ -42,15 +100,12 @@ export function ContactSection() {
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">Hablemos de tu Proyecto</h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto text-pretty">
-              ¿Tienes una idea? ¿Necesitas una solución tecnológica? Estamos aquí para ayudarte a convertir tus
+              ¿Tenés una idea? ¿Necesitás una solución tecnológica? Estamos aquí para ayudarte a convertir tus
               objetivos en realidad.
             </p>
           </div>
 
-          <ModalSuccess
-            visible={success}
-            onClose={() => setSuccess(false)}
-          />
+          <ModalSuccess visible={status === "success"} onClose={() => setStatus("idle")} />
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Contact Form */}
@@ -58,12 +113,13 @@ export function ContactSection() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <MessageSquare className="h-5 w-5 text-accent" />
-                  Envíanos un Mensaje
+                  Envianos un Mensaje
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form onSubmit={handleSubmit} noValidate className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {/* Name */}
                     <div>
                       <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
                         Nombre *
@@ -72,12 +128,15 @@ export function ContactSection() {
                         id="name"
                         name="name"
                         type="text"
-                        required
                         value={formData.name}
                         onChange={handleChange}
                         placeholder="Tu nombre completo"
+                        className={errors.name ? "border-destructive focus-visible:ring-destructive/40" : ""}
                       />
+                      {errors.name && <FieldError message={errors.name} />}
                     </div>
+
+                    {/* Email */}
                     <div>
                       <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
                         Email *
@@ -86,14 +145,16 @@ export function ContactSection() {
                         id="email"
                         name="email"
                         type="email"
-                        required
                         value={formData.email}
                         onChange={handleChange}
                         placeholder="tu@email.com"
+                        className={errors.email ? "border-destructive focus-visible:ring-destructive/40" : ""}
                       />
+                      {errors.email && <FieldError message={errors.email} />}
                     </div>
                   </div>
 
+                  {/* Company */}
                   <div>
                     <label htmlFor="company" className="block text-sm font-medium text-foreground mb-2">
                       Empresa
@@ -108,6 +169,7 @@ export function ContactSection() {
                     />
                   </div>
 
+                  {/* Message */}
                   <div>
                     <label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">
                       Mensaje *
@@ -115,17 +177,39 @@ export function ContactSection() {
                     <Textarea
                       id="message"
                       name="message"
-                      required
                       value={formData.message}
                       onChange={handleChange}
-                      placeholder="Cuéntanos sobre tu proyecto o necesidades..."
+                      placeholder="Contanos sobre tu proyecto o necesidades..."
                       rows={5}
+                      className={errors.message ? "border-destructive focus-visible:ring-destructive/40" : ""}
+                    />
+                    {errors.message && <FieldError message={errors.message} />}
+                  </div>
+
+                  {/* reCAPTCHA */}
+                  <div>
+                    <ReCAPTCHA
+                      ref={recaptchaRef}
+                      sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ?? ""}
+                      theme="light"
                     />
                   </div>
 
-                  <Button type="submit" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">
-                    Enviar Mensaje
-                    <Send className="ml-2 h-4 w-4" />
+                  {/* General API / captcha error */}
+                  {(status === "error" || errorMsg) && errorMsg && (
+                    <div className="field-error flex items-start gap-2 rounded-md bg-destructive/10 border border-destructive/30 px-3 py-2.5 text-sm text-destructive">
+                      <AlertCircle className="h-4 w-4 shrink-0 mt-0.5" />
+                      {errorMsg}
+                    </div>
+                  )}
+
+                  <Button
+                    type="submit"
+                    disabled={status === "loading"}
+                    className="w-full bg-accent hover:bg-accent/90 text-accent-foreground"
+                  >
+                    {status === "loading" ? "Enviando..." : "Enviar Mensaje"}
+                    {status !== "loading" && <Send className="ml-2 h-4 w-4" />}
                   </Button>
                 </form>
               </CardContent>
@@ -133,7 +217,6 @@ export function ContactSection() {
 
             {/* Contact Information */}
             <div className="space-y-8">
-              {/* Contact Details */}
               <Card>
                 <CardHeader>
                   <CardTitle>Información de Contacto</CardTitle>
@@ -145,8 +228,7 @@ export function ContactSection() {
                     </div>
                     <div>
                       <h4 className="font-semibold text-foreground">Email</h4>
-                      <p className="text-muted-foreground">contacto@hexarsoftware.com</p>
-                      <p className="text-muted-foreground">ventas@hexarsoftware.com</p>
+                      <p className="text-muted-foreground">info@hexar.com.ar</p>
                     </div>
                   </div>
 
@@ -156,7 +238,7 @@ export function ContactSection() {
                     </div>
                     <div>
                       <h4 className="font-semibold text-foreground">Teléfono</h4>
-                      <p className="text-muted-foreground">+54 11-7238-8272 </p>
+                      <p className="text-muted-foreground">+54 11-7238-8272</p>
                     </div>
                   </div>
 
@@ -167,7 +249,7 @@ export function ContactSection() {
                     <div>
                       <h4 className="font-semibold text-foreground">Ubicación</h4>
                       <p className="text-muted-foreground">
-                         Las palmas 2779, piso 3 depto A
+                        Las palmas 2779, piso 3 depto A
                         <br />
                         CABA, Buenos Aires
                       </p>
@@ -189,27 +271,6 @@ export function ContactSection() {
                   </div>
                 </CardContent>
               </Card>
-
-              {/* Social Links */}
-              {/*}
-              <Card>
-                <CardHeader>
-                  <CardTitle>Síguenos</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex gap-4">
-                    <Button variant="outline" size="sm" className="flex-1 bg-transparent">
-                      <Linkedin className="h-4 w-4 mr-2" />
-                      LinkedIn
-                    </Button>
-                    <Button variant="outline" size="sm" className="flex-1 bg-transparent">
-                      <Github className="h-4 w-4 mr-2" />
-                      GitHub
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-              */}
 
               {/* Quick Response */}
               <div className="bg-accent/10 rounded-lg p-6 border border-accent/20">

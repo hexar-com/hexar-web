@@ -1,8 +1,35 @@
 "use client"
 
+import { useEffect, useRef } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Code2, Database, Cloud, Smartphone, Globe, Shield, ArrowRight } from "lucide-react"
+
+function RevealItem({ children, delay }: { children: React.ReactNode; delay: number }) {
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => el.classList.add("reveal-visible"), delay)
+          io.unobserve(el)
+        }
+      },
+      { threshold: 0.1 }
+    )
+    io.observe(el)
+    return () => io.disconnect()
+  }, [delay])
+
+  return (
+    <div ref={ref} className="reveal-up h-full">
+      {children}
+    </div>
+  )
+}
 
 export function ServicesSection() {
   const services = [
@@ -75,25 +102,27 @@ export function ServicesSection() {
             {services.map((service, index) => {
               const IconComponent = service.icon
               return (
-                <Card key={index} className="h-full hover:shadow-lg transition-shadow duration-300">
-                  <CardHeader>
-                    <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mb-4">
-                      <IconComponent className="h-6 w-6 text-accent" />
-                    </div>
-                    <CardTitle className="text-xl text-card-foreground">{service.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground mb-4 text-pretty">{service.description}</p>
-                    <ul className="space-y-2">
-                      {service.features.map((feature, featureIndex) => (
-                        <li key={featureIndex} className="flex items-center gap-2 text-sm text-muted-foreground">
-                          <div className="w-1.5 h-1.5 bg-accent rounded-full flex-shrink-0" />
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
+                <RevealItem key={index} delay={index * 90}>
+                  <Card className="h-full hover:shadow-lg transition-shadow duration-300">
+                    <CardHeader>
+                      <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mb-4">
+                        <IconComponent className="h-6 w-6 text-accent" />
+                      </div>
+                      <CardTitle className="text-xl text-card-foreground">{service.title}</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-muted-foreground mb-4 text-pretty">{service.description}</p>
+                      <ul className="space-y-2">
+                        {service.features.map((feature, featureIndex) => (
+                          <li key={featureIndex} className="flex items-center gap-2 text-sm text-muted-foreground">
+                            <div className="w-1.5 h-1.5 bg-accent rounded-full flex-shrink-0" />
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
+                    </CardContent>
+                  </Card>
+                </RevealItem>
               )
             })}
           </div>

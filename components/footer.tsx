@@ -127,7 +127,7 @@ export function Footer() {
         <div className="border-t border-primary-foreground/20 py-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="text-primary-foreground/60 text-sm">
-              © 2024 Hexar Software Factory. Todos los derechos reservados.
+              © 2026 Hexar Software Factory. Todos los derechos reservados.
             </div>
 
             <div className="flex items-center gap-6">
