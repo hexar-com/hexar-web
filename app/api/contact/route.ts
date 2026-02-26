@@ -18,6 +18,7 @@ async function verifyCaptcha(token: string): Promise<boolean> {
     console.error("reCAPTCHA Enterprise env vars not set (RECAPTCHA_PROJECT_ID, RECAPTCHA_API_KEY, NEXT_PUBLIC_RECAPTCHA_SITE_KEY)")
     return false
   }
+  console.error("reCAPTCHA Enterprise: Verifying token with Google API...")
 
   const res = await fetch(
     `https://recaptchaenterprise.googleapis.com/v1/projects/${projectId}/assessments?key=${apiKey}`,
@@ -38,6 +39,7 @@ async function verifyCaptcha(token: string): Promise<boolean> {
 
   if (!data.tokenProperties?.valid) {
     console.error("reCAPTCHA Enterprise: invalid token", data.tokenProperties?.invalidReason)
+    console.error("Full response:", data)
     return false
   }
 
