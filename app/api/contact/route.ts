@@ -110,7 +110,7 @@ export async function POST(req: NextRequest) {
           </tr>
         </table>
 
-        <p style="margin-top: 32px; font-size: 12px; color: #3E4A55;">Enviado desde el formulario de contacto de hexarsoftware.com</p>
+        <p style="margin-top: 32px; font-size: 12px; color: #3E4A55;">Enviado desde el formulario de contacto de hexar.com.ar</p>
       </div>
     `
 
