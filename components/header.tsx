@@ -23,7 +23,7 @@ export function Header() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <Link className='flex items-center' href="/home" >
+            <Link className='flex items-center' href="/" >
               <Image className=' w-10 md:w-16' src="/images/hexar-logo.png" alt="Hexar" width={0}
                 height={0}
                 sizes="60vw" />

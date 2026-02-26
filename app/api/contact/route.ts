@@ -10,20 +10,44 @@ interface ContactPayload {
 }
 
 async function verifyCaptcha(token: string): Promise<boolean> {
-  const secret = process.env.RECAPTCHA_SECRET_KEY
-  if (!secret) {
-    console.error("RECAPTCHA_SECRET_KEY is not set")
+  const projectId = process.env.RECAPTCHA_PROJECT_ID
+  const apiKey = process.env.RECAPTCHA_API_KEY
+  const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY
+
+  if (!projectId || !apiKey || !siteKey) {
+    console.error("reCAPTCHA Enterprise env vars not set (RECAPTCHA_PROJECT_ID, RECAPTCHA_API_KEY, NEXT_PUBLIC_RECAPTCHA_SITE_KEY)")
     return false
   }
 
-  const res = await fetch("https://www.google.com/recaptcha/api/siteverify", {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: new URLSearchParams({ secret, response: token }).toString(),
-  })
+  const res = await fetch(
+    `https://recaptchaenterprise.googleapis.com/v1/projects/${projectId}/assessments?key=${apiKey}`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        event: {
+          token,
+          siteKey,
+          expectedAction: "submit_contact",
+        },
+      }),
+    }
+  )
 
   const data = await res.json()
-  return data.success === true
+
+  if (!data.tokenProperties?.valid) {
+    console.error("reCAPTCHA Enterprise: invalid token", data.tokenProperties?.invalidReason)
+    return false
+  }
+
+  if (data.tokenProperties.action !== "submit_contact") {
+    console.error("reCAPTCHA Enterprise: action mismatch", data.tokenProperties.action)
+    return false
+  }
+
+  const score: number = data.riskAnalysis?.score ?? 0
+  return score >= 0.5
 }
 
 function createTransporter() {
@@ -51,7 +75,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Captcha requerido." }, { status: 400 })
     }
 
-    // --- reCAPTCHA verification ---
+    // --- reCAPTCHA Enterprise verification ---
     const captchaOk = await verifyCaptcha(captchaToken)
     if (!captchaOk) {
       return NextResponse.json({ error: "Verificación de captcha fallida." }, { status: 400 })

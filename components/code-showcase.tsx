@@ -165,7 +165,7 @@ export function CodeShowcase() {
           </div>
 
           {/* ── Right: animated code editor ── */}
-          <div className="w-full">
+          <div className="hidden lg:block w-full">
             <div
               className="rounded-xl overflow-hidden border border-white/[0.07] shadow-[0_24px_80px_rgba(0,0,0,0.55)]"
               style={{ fontFamily: "var(--font-geist-mono, 'Fira Code', 'Cascadia Code', monospace)" }}

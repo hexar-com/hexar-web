@@ -1,14 +1,24 @@
 "use client"
 
 import type React from "react"
-import { useRef, useState } from "react"
-import ReCAPTCHA from "react-google-recaptcha"
+import { useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Mail, Phone, MapPin, Clock, Send, MessageSquare, AlertCircle } from "lucide-react"
 import ModalSuccess from "./ui/modal-success"
+
+declare global {
+  interface Window {
+    grecaptcha: {
+      enterprise: {
+        ready: (callback: () => void) => void
+        execute: (siteKey: string, options: { action: string }) => Promise<string>
+      }
+    }
+  }
+}
 
 // Animated inline field error — replaces browser tooltip
 function FieldError({ message }: { message: string }) {
@@ -29,8 +39,6 @@ type FormErrors = {
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 export function ContactSection() {
-  const recaptchaRef = useRef<ReCAPTCHA>(null)
-
   const [formData, setFormData] = useState({ name: "", email: "", company: "", message: "" })
   const [errors, setErrors] = useState<FormErrors>({})
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle")
@@ -65,14 +73,26 @@ export function ContactSection() {
     }
     setErrors({})
 
-    const captchaToken = recaptchaRef.current?.getValue()
-    if (!captchaToken) {
-      setErrorMsg("Por favor, completá el captcha antes de enviar.")
-      return
-    }
-
     setStatus("loading")
     try {
+      const captchaToken = await new Promise<string>((resolve, reject) => {
+        if (!window.grecaptcha?.enterprise) {
+          reject(new Error("reCAPTCHA no está disponible. Recargá la página e intentá nuevamente."))
+          return
+        }
+        window.grecaptcha.enterprise.ready(async () => {
+          try {
+            const token = await window.grecaptcha.enterprise.execute(
+              process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!,
+              { action: "submit_contact" }
+            )
+            resolve(token)
+          } catch (err) {
+            reject(err)
+          }
+        })
+      })
+
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -82,12 +102,10 @@ export function ContactSection() {
       if (!res.ok) throw new Error(data.error ?? "Error desconocido")
 
       setFormData({ name: "", email: "", company: "", message: "" })
-      recaptchaRef.current?.reset()
       setStatus("success")
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : "Error al enviar el mensaje. Intentá nuevamente."
       setErrorMsg(message)
-      recaptchaRef.current?.reset()
       setStatus("error")
     }
   }
@@ -186,15 +204,6 @@ export function ContactSection() {
                     {errors.message && <FieldError message={errors.message} />}
                   </div>
 
-                  {/* reCAPTCHA */}
-                  <div>
-                    <ReCAPTCHA
-                      ref={recaptchaRef}
-                      sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ?? ""}
-                      theme="light"
-                    />
-                  </div>
-
                   {/* General API / captcha error */}
                   {(status === "error" || errorMsg) && errorMsg && (
                     <div className="field-error flex items-start gap-2 rounded-md bg-destructive/10 border border-destructive/30 px-3 py-2.5 text-sm text-destructive">
@@ -211,6 +220,17 @@ export function ContactSection() {
                     {status === "loading" ? "Enviando..." : "Enviar Mensaje"}
                     {status !== "loading" && <Send className="ml-2 h-4 w-4" />}
                   </Button>
+
+                  <p className="text-xs text-muted-foreground text-center">
+                    Este sitio está protegido por reCAPTCHA Enterprise de Google.{" "}
+                    <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="underline">
+                      Política de privacidad
+                    </a>{" "}
+                    y{" "}
+                    <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer" className="underline">
+                      Términos de servicio
+                    </a>.
+                  </p>
                 </form>
               </CardContent>
             </Card>
