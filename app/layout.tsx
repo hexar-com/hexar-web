@@ -8,7 +8,7 @@ import Script from "next/script"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  title: "Hexar Solutions - Soluciones de Software Profesionales",
+  title: "Hexar Software Factory - Soluciones de Software Profesionales",
   description:
     "Creamos soluciones de software completas, gestionamos bases de datos y desarrollamos productos innovadores. Tu socio tecnológico de confianza.",
   generator: "Hexar Software Factory",
