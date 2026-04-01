@@ -14,10 +14,25 @@ export function ProductsSection() {
       description:
         "Plataforma de busqueda de proveedores de servicios para individuos, facilitando la conexión entre individuos y profesionales.",
       status: "Activo",
-      users: "500+ user",
+      users: "2000+ user",
       features: ["Búsqueda avanzada", "Reseñas y calificaciones", "Reservas en línea"],
       category: "Marketplace",
-      link: "https://velzo.com.ar/home"
+      link: "https://velzo.com.ar/home",
+      logo: "/images/velzo-logo.webp",
+      dark: false,
+    },
+    {
+      icon: BarChart3,
+      title: "Places Layer",
+      description:
+        "Api de geolocalización que ofrece datos actualizados y precisos sobre lugares, con integración fácil y soporte para desarrolladores.",
+      status: "Activo",
+      users: "100+ user",
+      features: ["Búsqueda de lugares", "SDK para desarrolladores", "Datos actualizados", "Integración fácil", "IA para geolocalización"],
+      category: "API - SDK",
+      link: "https://placeslayer.com",
+      logo: "/images/placeslayer.png",
+      dark: true,
     }
   ]
 
@@ -47,17 +62,85 @@ export function ProductsSection() {
 
           {/* Products Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 mb-12">
-            {products.map((product, index) => {
-              const IconComponent = product.icon
-              return (
+            {products.map((product, index) => (
+              product.dark ? (
+                <Card
+                  key={index}
+                  className="h-full transition-all duration-300 hover:-translate-y-1 border-0 overflow-hidden"
+                  style={{ background: "#0a0a0a", boxShadow: "0 0 0 1px #22c55e33, 0 8px 32px #22c55e18" }}
+                >
+                  <CardHeader>
+                    <div className="flex items-start justify-between mb-4">
+                      <div className="w-12 h-12 rounded-lg flex items-center justify-center" style={{ background: "#22c55e18" }}>
+                        <Image className="w-8 h-8 object-contain" src={product.logo} alt={product.title + " logo"}
+                          width={32} height={32} />
+                      </div>
+                      <div className="flex gap-2">
+                        <Badge className="border-0 text-xs font-semibold" style={{ background: "#22c55e22", color: "#4ade80" }}>
+                          {product.status}
+                        </Badge>
+                        <Badge variant="outline" className="text-xs border-[#22c55e44] text-[#86efac]">{product.category}</Badge>
+                      </div>
+                    </div>
+                    <CardTitle
+                      className="text-xl font-bold mb-2"
+                      style={{
+                        background: "linear-gradient(90deg, #22c55e 0%, #86efac 40%, #22c55e 60%, #4ade80 100%)",
+                        WebkitBackgroundClip: "text",
+                        WebkitTextFillColor: "transparent",
+                        backgroundClip: "text",
+                      }}
+                    >
+                      {product.title}
+                    </CardTitle>
+                    <div className="flex items-center gap-2 text-sm mb-4" style={{ color: "#86efac99" }}>
+                      <Users className="h-4 w-4" />
+                      {product.users}
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="mb-6 text-pretty text-sm" style={{ color: "#86efac99" }}>{product.description}</p>
+
+                    <div className="mb-6">
+                      <h4 className="font-semibold mb-3 text-sm" style={{ color: "#86efac" }}>Características principales:</h4>
+                      <ul className="space-y-2">
+                        {product.features.map((feature, featureIndex) => (
+                          <li key={featureIndex} className="flex items-center gap-2 text-sm" style={{ color: "#86efac99" }}>
+                            <Zap className="h-3 w-3 flex-shrink-0" style={{ color: "#22c55e" }} />
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className="flex gap-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="flex-1 bg-transparent border-[#22c55e44] text-[#86efac] hover:bg-[#22c55e11] hover:text-[#4ade80]"
+                        onClick={scrollToContact}
+                      >
+                        Más Info
+                      </Button>
+                      <Button
+                        size="sm"
+                        className="text-black font-semibold hover:opacity-90"
+                        style={{ background: "linear-gradient(90deg, #22c55e, #4ade80)" }}
+                        onClick={goToProduct.bind(null, product.link)}
+                      >
+                        Ir al producto
+                        <ExternalLink className="ml-2 h-4 w-4" />
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ) : (
                 <Card key={index} className="h-full hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
                   <CardHeader>
                     <div className="flex items-start justify-between mb-4">
                       <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center">
-                        <Image className='w-24 pb-5 m-auto' src='/images/velzo-logo.webp' alt='logo' 
-                          width={0}
-                          height={0}
-                          sizes="100vw" />
+                        <Image className="w-8 h-8 object-contain" src={product.logo} alt={product.title + " logo"}
+                          width={32} height={32} />
                       </div>
                       <div className="flex gap-2">
                         <Badge
@@ -108,7 +191,7 @@ export function ProductsSection() {
                   </CardContent>
                 </Card>
               )
-            })}
+            ))}
           </div>
 
           {/* Success Stories */}
