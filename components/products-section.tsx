@@ -18,7 +18,7 @@ export function ProductsSection() {
       features: ["Búsqueda avanzada", "Reseñas y calificaciones", "Reservas en línea"],
       category: "Marketplace",
       link: "https://velzo.com.ar/home",
-      logo: "/images/velzo-logo.webp",
+      logo: "/images/velzo-logo.png",
       dark: false,
     },
     {
