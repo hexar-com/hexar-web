@@ -14,7 +14,7 @@ export function ProductsSection() {
       description:
         "Plataforma de busqueda de proveedores de servicios para individuos, facilitando la conexión entre individuos y profesionales.",
       status: "Activo",
-      users: "2000+ user",
+      users: "5000+ user",
       features: ["Búsqueda avanzada", "Reseñas y calificaciones", "Reservas en línea"],
       category: "Marketplace",
       link: "https://velzo.com.ar/home",
@@ -202,7 +202,7 @@ export function ProductsSection() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="text-center">
-                <div className="text-5xl md:text-6xl font-bold text-accent mb-2">500+</div>
+                <div className="text-5xl md:text-6xl font-bold text-accent mb-2">5000+</div>
                 <div className="text-white/60">Usuarios Activos</div>
               </div>
               <div className="text-center">
