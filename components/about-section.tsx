@@ -8,7 +8,7 @@ export function AboutSection() {
         <div className="max-w-6xl mx-auto">
           {/* Section Header */}
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">Quiénes Somos</h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">Quiénes Somos</h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto text-pretty">
               Hexar Software Factory es una empresa especializada en el desarrollo de soluciones tecnológicas integrales
               que transforman la manera en que las empresas operan y crecen.
@@ -56,44 +56,38 @@ export function AboutSection() {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-6">
-              <Card className="text-center p-6">
-                <CardContent className="p-0">
-                  <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Users className="h-8 w-8 text-accent" />
+            <div className="grid grid-cols-2 gap-4">
+              {/* Featured stat: solid accent fill, spans the full width — carries real visual weight */}
+              <Card className="col-span-2 p-8 border-0 bg-accent text-accent-foreground">
+                <CardContent className="p-0 flex items-center justify-between">
+                  <div>
+                    <h4 className="text-5xl font-bold mb-1">100%</h4>
+                    <p className="text-accent-foreground/80">Proyectos completados y funcionando en producción</p>
                   </div>
-                  <h4 className="text-2xl font-bold text-primary mb-2">100%</h4>
-                  <p className="text-muted-foreground">Proyectos Completados</p>
+                  <Users className="h-12 w-12 text-accent-foreground/40 shrink-0" />
                 </CardContent>
               </Card>
 
-              <Card className="text-center p-6">
+              <Card className="p-6">
                 <CardContent className="p-0">
-                  <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Target className="h-8 w-8 text-accent" />
-                  </div>
-                  <h4 className="text-2xl font-bold text-primary mb-2">100%</h4>
-                  <p className="text-muted-foreground">Satisfacción Cliente</p>
+                  <Target className="h-6 w-6 text-accent mb-3" />
+                  <h4 className="text-2xl font-bold text-primary mb-1">100%</h4>
+                  <p className="text-muted-foreground text-sm">Satisfacción cliente</p>
                 </CardContent>
               </Card>
 
-              <Card className="text-center p-6">
+              <Card className="p-6">
                 <CardContent className="p-0">
-                  <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Award className="h-8 w-8 text-accent" />
-                  </div>
-                  <h4 className="text-2xl font-bold text-primary mb-2">5+</h4>
-                  <p className="text-muted-foreground">Años Experiencia</p>
+                  <Award className="h-6 w-6 text-accent mb-3" />
+                  <h4 className="text-2xl font-bold text-primary mb-1">5+</h4>
+                  <p className="text-muted-foreground text-sm">Años de experiencia</p>
                 </CardContent>
               </Card>
 
-              <Card className="text-center p-6">
-                <CardContent className="p-0">
-                  <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Rocket className="h-8 w-8 text-accent" />
-                  </div>
-                  <h4 className="text-2xl font-bold text-primary mb-2">24/7</h4>
-                  <p className="text-muted-foreground">Soporte Técnico</p>
+              <Card className="col-span-2 p-6">
+                <CardContent className="p-0 flex items-center gap-3">
+                  <Rocket className="h-6 w-6 text-accent shrink-0" />
+                  <p className="text-primary font-semibold">Soporte técnico 24/7 en cada etapa del proyecto</p>
                 </CardContent>
               </Card>
             </div>

@@ -7,8 +7,8 @@
   /* Hexar blue palette — light mode */
   --background: #ffffff;
   --foreground: #0F1F2E;
-  /* Cards and surfaces: pale blue tint, not gray */
-  --card: #E4F2FA;
+  /* Cards: crisp white so they lift off the pale-blue section washes instead of blending in */
+  --card: #ffffff;
   --card-foreground: #0F1F2E;
   --popover: #ffffff;
   --popover-foreground: #0F1F2E;
@@ -88,6 +88,7 @@
 @theme inline {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-space-grotesk);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -133,26 +134,36 @@
   body {
     @apply bg-background text-foreground;
   }
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+  }
 }
 
 /* ============================================================
    HEXAR — Motion & Scroll Reveal
    ============================================================ */
 
-/* --- Orb float paths --- */
-@keyframes floatA {
-  0%, 100% { transform: translate(0, 0); }
-  33%       { transform: translate(32px, -24px); }
-  66%       { transform: translate(-20px, 16px); }
+/* --- Hero: technical grid + scan line accent (no floating blur blobs) --- */
+@keyframes scanline {
+  0%   { transform: translateY(-100%); opacity: 0; }
+  8%   { opacity: 1; }
+  92%  { opacity: 1; }
+  100% { transform: translateY(2200%); opacity: 0; }
 }
-@keyframes floatB {
-  0%, 100% { transform: translate(0, 0); }
-  40%       { transform: translate(-36px, 20px); }
-  75%       { transform: translate(24px, -28px); }
-}
-@keyframes floatC {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50%       { transform: translate(22px, 20px) scale(1.05); }
+.hex-scanline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent) 20%, var(--accent) 80%, transparent);
+  animation: scanline 7s linear infinite;
+  will-change: transform;
 }
 
 /* --- Seamless marquee --- */
@@ -171,15 +182,6 @@
 .hex-dot-grid {
   background-image: radial-gradient(circle, #4FA3D1 1px, transparent 1px);
   background-size: 30px 30px;
-}
-
-/* --- Floating orb base style --- */
-.anim-orb {
-  position: absolute;
-  border-radius: 9999px;
-  filter: blur(80px);
-  pointer-events: none;
-  will-change: transform;
 }
 
 /* --- Scroll reveal --- */

@@ -2,10 +2,17 @@ import type React from "react"
 import type { Metadata } from "next"
 import { GeistSans } from "geist/font/sans"
 import { GeistMono } from "geist/font/mono"
+import { Space_Grotesk } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { Suspense } from "react"
 import Script from "next/script"
 import "./globals.css"
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-space-grotesk",
+  weight: ["500", "600", "700"],
+})
 
 export const metadata: Metadata = {
   title: "Hexar Software Factory - Soluciones de Software Profesionales",
@@ -31,7 +38,7 @@ export default function RootLayout({
         <meta name="author" content="Hexar Software Factory" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
-      <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
+      <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable} ${spaceGrotesk.variable}`}>
         <Suspense fallback={null}>{children}</Suspense>
         <Analytics />
         <Script

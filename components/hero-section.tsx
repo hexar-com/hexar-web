@@ -1,9 +1,21 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { ArrowRight, Code, Database, Rocket } from "lucide-react"
+import { ArrowRight, Terminal } from "lucide-react"
+import { motion, useReducedMotion } from "framer-motion"
+
+const HEADLINE = "Transformamos Ideas en Soluciones Digitales".split(" ")
+const ACCENT_FROM = 3 // "Soluciones Digitales" gets the accent color
+
+const readout = [
+  { label: "proyectos_completados", value: "100%" },
+  { label: "uptime_productos_activos", value: "99.9%" },
+  { label: "soporte", value: "24/7" },
+]
 
 export function HeroSection() {
+  const shouldReduceMotion = useReducedMotion()
+
   const scrollToContact = () => {
     const element = document.getElementById("contact")
     if (element) {
@@ -12,40 +24,48 @@ export function HeroSection() {
   }
 
   return (
-    <section className="pt-16 pb-20 bg-gradient-to-br from-background to-muted relative overflow-hidden">
-      {/* Animated background */}
-      <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
-        {/* Dot grid */}
-        <div className="absolute inset-0 hex-dot-grid opacity-[0.045]" />
-        {/* Orb 1 — top-left, large, slow */}
-        <div
-          className="anim-orb w-[520px] h-[520px] -top-32 -left-40"
-          style={{ background: "rgba(46,125,178,0.18)", animation: "floatA 14s ease-in-out infinite" }}
-        />
-        {/* Orb 2 — bottom-right, medium */}
-        <div
-          className="anim-orb w-[380px] h-[380px] -bottom-16 -right-24"
-          style={{ background: "rgba(79,163,209,0.13)", animation: "floatB 11s ease-in-out infinite", animationDelay: "-5s" }}
-        />
-        {/* Orb 3 — center, small, fast */}
-        <div
-          className="anim-orb w-[240px] h-[240px] top-[45%] left-[48%]"
-          style={{ background: "rgba(31,95,139,0.14)", animation: "floatC 8s ease-in-out infinite", animationDelay: "-3s" }}
-        />
+    <section className="pt-32 pb-24 bg-gradient-to-br from-background to-muted relative overflow-hidden">
+      {/* Technical background: static dot grid + single scanning accent line */}
+      <div aria-hidden="true" className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute inset-0 hex-dot-grid opacity-[0.05]" />
+        <div className="hex-scanline top-0" />
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="max-w-4xl mx-auto text-center">
-          {/* Hero Content */}
-          <div className="mb-12 mt-10">
-            <h1 className="text-4xl md:text-6xl font-bold text-primary mb-6 text-balance">
-              Transformamos Ideas en <span className="text-accent">Soluciones Digitales</span>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center max-w-6xl mx-auto">
+          {/* Headline column — 7/12, left-aligned */}
+          <div className="lg:col-span-7">
+            <h1 className="text-5xl md:text-6xl xl:text-[5rem] xl:leading-[0.95] font-bold text-primary mb-6 text-balance flex flex-wrap">
+              {HEADLINE.map((word, i) => (
+                <span key={i} className="overflow-hidden mr-[0.28em] pb-1">
+                  <motion.span
+                    className={`inline-block ${i >= ACCENT_FROM ? "text-accent" : ""}`}
+                    initial={shouldReduceMotion ? undefined : { y: "110%" }}
+                    animate={shouldReduceMotion ? undefined : { y: 0 }}
+                    transition={{ duration: 0.6, delay: i * 0.06, ease: [0.16, 1, 0.3, 1] }}
+                  >
+                    {word}
+                  </motion.span>
+                </span>
+              ))}
             </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground mb-8 text-pretty max-w-3xl mx-auto">
+
+            <motion.p
+              initial={shouldReduceMotion ? undefined : { opacity: 0, y: 12 }}
+              animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              className="text-lg md:text-xl text-muted-foreground mb-8 text-pretty max-w-xl"
+            >
               Somos Hexar Software Factory, tu socio tecnológico especializado en crear soluciones de software
               completas, gestionar bases de datos y desarrollar productos innovadores que impulsan tu negocio.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            </motion.p>
+
+            <motion.div
+              initial={shouldReduceMotion ? undefined : { opacity: 0, y: 12 }}
+              animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.62, ease: [0.16, 1, 0.3, 1] }}
+              className="flex flex-col sm:flex-row gap-4"
+            >
               <Button
                 size="lg"
                 onClick={scrollToContact}
@@ -61,35 +81,36 @@ export function HeroSection() {
               >
                 Conocer Más
               </Button>
-            </div>
+            </motion.div>
           </div>
 
-          {/* Feature Icons */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
-            <div className="flex flex-col items-center p-6 bg-card rounded-lg border border-border">
-              <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mb-4">
-                <Code className="h-8 w-8 text-accent" />
+          {/* Status panel — 5/12, terminal-style readout, sets it apart from a 3rd identical card */}
+          <motion.div
+            initial={shouldReduceMotion ? undefined : { opacity: 0, x: 16 }}
+            animate={shouldReduceMotion ? undefined : { opacity: 1, x: 0 }}
+            transition={{ duration: 0.7, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-5"
+          >
+            <div className="bg-primary text-primary-foreground rounded-lg border border-border overflow-hidden">
+              <div className="flex items-center gap-2 px-4 py-3 border-b border-primary-foreground/10">
+                <Terminal className="h-4 w-4 text-accent" />
+                <span className="font-mono text-xs text-primary-foreground/70">hexar --status</span>
               </div>
-              <h3 className="text-lg font-semibold text-card-foreground mb-2">Desarrollo de Software</h3>
-              <p className="text-muted-foreground text-center">Soluciones personalizadas con las últimas tecnologías</p>
-            </div>
-
-            <div className="flex flex-col items-center p-6 bg-card rounded-lg border border-border">
-              <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mb-4">
-                <Database className="h-8 w-8 text-accent" />
+              <div className="p-5 font-mono text-sm space-y-3">
+                {readout.map((row) => (
+                  <div key={row.label} className="flex items-center justify-between gap-4">
+                    <span className="text-primary-foreground/60">{row.label}</span>
+                    <span className="text-accent font-semibold">{row.value}</span>
+                  </div>
+                ))}
+                <div className="pt-2 mt-2 border-t border-primary-foreground/10 flex items-center gap-2 text-primary-foreground/60">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                  productos en producción
+                  <span className="cursor-blink text-accent">_</span>
+                </div>
               </div>
-              <h3 className="text-lg font-semibold text-card-foreground mb-2">Gestión de Bases de Datos</h3>
-              <p className="text-muted-foreground text-center">Arquitectura y optimización de datos empresariales</p>
             </div>
-
-            <div className="flex flex-col items-center p-6 bg-card rounded-lg border border-border">
-              <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mb-4">
-                <Rocket className="h-8 w-8 text-accent" />
-              </div>
-              <h3 className="text-lg font-semibold text-card-foreground mb-2">Productos Activos</h3>
-              <p className="text-muted-foreground text-center">Soluciones probadas en producción y funcionando</p>
-            </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
