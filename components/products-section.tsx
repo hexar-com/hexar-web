@@ -33,8 +33,47 @@ export function ProductsSection() {
       link: "https://placeslayer.com",
       logo: "/images/placeslayer.png",
       dark: true,
-    }
+    },
+    {
+      icon: BarChart3,
+      title: "Archynt",
+      description:
+        "Plataforma de inteligencia de arquitectura: analiza tu código y tu sistema en ejecución y los fusiona en un grafo vivo para detectar drift, dependencias cíclicas y puntos únicos de falla.",
+      status: "Activo",
+      users: "Early access",
+      features: ["Análisis estático polyglot", "Topología en runtime", "Diagramas C4 vivos", "Detección de drift", "Insights con IA + MCP"],
+      category: "DevTools - IA",
+      link: "https://archynt.com",
+      logo: "/images/archynt-logo.png",
+      dark: true,
+      brand: "archynt",
+    },
   ]
+
+  // Paleta por tarjeta oscura. "archynt" usa los colores de su design system
+  // (ink navy, electric blue, cyan glow) tomados de FE-ARCHYNT/app/globals.css.
+  const darkThemes = {
+    hexar: {
+      card: "bg-primary",
+      logoBg: "bg-accent/15",
+      text: "text-primary-foreground",
+      accentText: "text-accent",
+      accentBg: "bg-accent/20",
+      border: "border-accent/30",
+      hover: "hover:bg-accent/10 hover:text-accent",
+      cta: "bg-accent hover:bg-accent/90 text-accent-foreground",
+    },
+    archynt: {
+      card: "bg-[oklch(0.17_0.032_263)] ring-1 ring-[oklch(0.66_0.19_258/0.35)] hover:shadow-[0_0_32px_oklch(0.66_0.19_258/0.35)]",
+      logoBg: "bg-[oklch(0.66_0.19_258/0.15)]",
+      text: "text-[oklch(0.95_0.012_250)]",
+      accentText: "text-[oklch(0.82_0.13_210)]",
+      accentBg: "bg-[oklch(0.82_0.13_210/0.15)]",
+      border: "border-[oklch(0.66_0.19_258/0.4)]",
+      hover: "hover:bg-[oklch(0.66_0.19_258/0.15)] hover:text-[oklch(0.82_0.13_210)]",
+      cta: "bg-[oklch(0.66_0.19_258)] hover:bg-[oklch(0.66_0.19_258/0.9)] text-[oklch(0.99_0.01_250)]",
+    },
+  } as const
 
   const scrollToContact = () => {
     const element = document.getElementById("contact")
@@ -63,42 +102,44 @@ export function ProductsSection() {
           {/* Products Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 mb-12">
             {products.map((product, index) => (
-              product.dark ? (
+              product.dark ? (() => {
+                const t = darkThemes[(product.brand as keyof typeof darkThemes) ?? "hexar"]
+                return (
                 <Card
                   key={index}
-                  className="h-full transition-all duration-300 hover:-translate-y-1 border-0 overflow-hidden bg-primary text-primary-foreground"
+                  className={`h-full transition-all duration-300 hover:-translate-y-1 border-0 overflow-hidden ${t.card} ${t.text}`}
                 >
                   <CardHeader>
                     <div className="flex items-start justify-between mb-4">
-                      <div className="w-12 h-12 rounded-lg flex items-center justify-center bg-accent/15">
+                      <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${t.logoBg}`}>
                         <Image className="w-8 h-8 object-contain" src={product.logo} alt={product.title + " logo"}
                           width={32} height={32} />
                       </div>
                       <div className="flex gap-2">
-                        <Badge className="border-0 text-xs font-semibold bg-accent/20 text-accent">
+                        <Badge className={`border-0 text-xs font-semibold ${t.accentBg} ${t.accentText}`}>
                           {product.status}
                         </Badge>
-                        <Badge variant="outline" className="text-xs border-accent/30 text-primary-foreground/70">{product.category}</Badge>
+                        <Badge variant="outline" className={`text-xs ${t.border} ${t.text} opacity-70`}>{product.category}</Badge>
                       </div>
                     </div>
-                    <CardTitle className="text-xl mb-2 text-primary-foreground">
+                    <CardTitle className={`text-xl mb-2 ${t.text}`}>
                       {product.title}
                     </CardTitle>
-                    <div className="flex items-center gap-2 text-sm mb-4 text-primary-foreground/60">
+                    <div className={`flex items-center gap-2 text-sm mb-4 opacity-60 ${t.text}`}>
                       <Users className="h-4 w-4" />
                       {product.users}
                     </div>
                   </CardHeader>
                   <CardContent>
-                    <p className="mb-6 text-pretty text-sm text-primary-foreground/70">{product.description}</p>
+                    <p className="mb-6 text-pretty text-sm opacity-70">{product.description}</p>
 
                     <div className="mb-6">
-                      <h4 className="font-semibold mb-3 text-sm text-primary-foreground/90">Características principales:</h4>
+                      <h4 className="font-semibold mb-3 text-sm opacity-90">Características principales:</h4>
                       <ul className="space-y-2">
                         {product.features.map((feature, featureIndex) => (
-                          <li key={featureIndex} className="flex items-center gap-2 text-sm text-primary-foreground/70">
-                            <Zap className="h-3 w-3 flex-shrink-0 text-accent" />
-                            {feature}
+                          <li key={featureIndex} className="flex items-center gap-2 text-sm">
+                            <Zap className={`h-3 w-3 flex-shrink-0 ${t.accentText}`} />
+                            <span className="opacity-70">{feature}</span>
                           </li>
                         ))}
                       </ul>
@@ -108,14 +149,14 @@ export function ProductsSection() {
                       <Button
                         variant="outline"
                         size="sm"
-                        className="flex-1 bg-transparent border-accent/30 text-primary-foreground hover:bg-accent/10 hover:text-accent"
+                        className={`flex-1 bg-transparent ${t.border} ${t.text} ${t.hover}`}
                         onClick={scrollToContact}
                       >
                         Más Info
                       </Button>
                       <Button
                         size="sm"
-                        className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold"
+                        className={`font-semibold ${t.cta}`}
                         onClick={goToProduct.bind(null, product.link)}
                       >
                         Ir al producto
@@ -124,7 +165,9 @@ export function ProductsSection() {
                     </div>
                   </CardContent>
                 </Card>
-              ) : (
+                )
+              })()
+              : (
                 <Card key={index} className="h-full hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
                   <CardHeader>
                     <div className="flex items-start justify-between mb-4">
