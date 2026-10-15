@@ -38,10 +38,10 @@ export function ProductsSection() {
       icon: BarChart3,
       title: "Archynt",
       description:
-        "Plataforma de inteligencia de arquitectura: analiza tu código y tu sistema en ejecución y los fusiona en un grafo vivo para detectar drift, dependencias cíclicas y puntos únicos de falla.",
+        "Plataforma de inteligencia de arquitectura: analiza tu código y tu sistema en ejecución y los fusiona en un grafo vivo para detectar dependencias cíclicas, acoplamiento y puntos únicos de falla.",
       status: "Activo",
       users: "Early access",
-      features: ["Análisis estático polyglot", "Topología en runtime", "Diagramas C4 vivos", "Detección de drift", "Insights con IA + MCP"],
+      features: ["Análisis estático polyglot", "Topología en runtime", "Diagramas C4 vivos", "Alertas, logs y métricas", "Insights con IA + MCP"],
       category: "DevTools - IA",
       link: "https://archynt.com",
       logo: "/images/archynt-logo.png",

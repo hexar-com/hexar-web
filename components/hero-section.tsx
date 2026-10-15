@@ -1,17 +1,14 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { ArrowRight, Terminal } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 import { motion, useReducedMotion } from "framer-motion"
 
 const HEADLINE = "Transformamos Ideas en Soluciones Digitales".split(" ")
 const ACCENT_FROM = 3 // "Soluciones Digitales" gets the accent color
 
-const readout = [
-  { label: "proyectos_completados", value: "100%" },
-  { label: "uptime_productos_activos", value: "99.9%" },
-  { label: "soporte", value: "24/7" },
-]
+const HIVE_CLASS =
+  "h-full w-full object-contain [mask-image:radial-gradient(closest-side,black_70%,transparent)] pointer-events-none select-none"
 
 export function HeroSection() {
   const shouldReduceMotion = useReducedMotion()
@@ -24,7 +21,7 @@ export function HeroSection() {
   }
 
   return (
-    <section className="pt-32 pb-24 bg-gradient-to-br from-background to-muted relative overflow-hidden">
+    <section className="pt-32 pb-24 bg-background relative overflow-hidden">
       {/* Technical background: static dot grid + single scanning accent line */}
       <div aria-hidden="true" className="absolute inset-0 pointer-events-none overflow-hidden">
         <div className="absolute inset-0 hex-dot-grid opacity-[0.05]" />
@@ -84,32 +81,30 @@ export function HeroSection() {
             </motion.div>
           </div>
 
-          {/* Status panel — 5/12, terminal-style readout, sets it apart from a 3rd identical card */}
+          {/* 3D loop rendered on the exact page white; the mask fades its edges into the dot grid */}
           <motion.div
-            initial={shouldReduceMotion ? undefined : { opacity: 0, x: 16 }}
-            animate={shouldReduceMotion ? undefined : { opacity: 1, x: 0 }}
-            transition={{ duration: 0.7, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-5"
+            initial={shouldReduceMotion ? undefined : { opacity: 0, scale: 0.96 }}
+            animate={shouldReduceMotion ? undefined : { opacity: 1, scale: 1 }}
+            transition={{ duration: 0.9, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-5 relative aspect-square w-full max-w-md mx-auto lg:max-w-none lg:scale-125 lg:translate-x-6"
           >
-            <div className="bg-primary text-primary-foreground rounded-lg border border-border overflow-hidden">
-              <div className="flex items-center gap-2 px-4 py-3 border-b border-primary-foreground/10">
-                <Terminal className="h-4 w-4 text-accent" />
-                <span className="font-mono text-xs text-primary-foreground/70">hexar --status</span>
-              </div>
-              <div className="p-5 font-mono text-sm space-y-3">
-                {readout.map((row) => (
-                  <div key={row.label} className="flex items-center justify-between gap-4">
-                    <span className="text-primary-foreground/60">{row.label}</span>
-                    <span className="text-accent font-semibold">{row.value}</span>
-                  </div>
-                ))}
-                <div className="pt-2 mt-2 border-t border-primary-foreground/10 flex items-center gap-2 text-primary-foreground/60">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                  productos en producción
-                  <span className="cursor-blink text-accent">_</span>
-                </div>
-              </div>
-            </div>
+            {shouldReduceMotion ? (
+              <img src="/video/hero_hive-poster.jpg" alt="" aria-hidden="true" className={HIVE_CLASS} />
+            ) : (
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                poster="/video/hero_hive-poster.jpg"
+                aria-hidden="true"
+                className={HIVE_CLASS}
+              >
+                <source src="/video/hero_hive.webm" type="video/webm" />
+                <source src="/video/hero_hive.mp4" type="video/mp4" />
+              </video>
+            )}
           </motion.div>
         </div>
       </div>
