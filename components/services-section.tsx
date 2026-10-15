@@ -173,7 +173,7 @@ export function ServicesSection() {
                 preload="metadata"
                 poster="/video/cta_stack-poster.jpg"
                 aria-hidden="true"
-                className="order-first h-56 w-56 shrink-0 pointer-events-none md:order-none md:-my-10 md:h-80 md:w-80 [mask-image:radial-gradient(closest-side,black_70%,transparent)] motion-reduce:hidden"
+                className="order-first h-56 w-56 shrink-0 pointer-events-none md:order-none md:-my-16 md:h-96 md:w-96 [mask-image:radial-gradient(closest-side,black_70%,transparent)] motion-reduce:hidden"
               >
                 <source src="/video/cta_stack.webm" type="video/webm" />
                 <source src="/video/cta_stack.mp4" type="video/mp4" />
