@@ -3,12 +3,10 @@
 import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
 import { motion, useReducedMotion } from "framer-motion"
+import { HeroAssembly } from "@/components/hero-assembly"
 
 const HEADLINE = "Transformamos Ideas en Soluciones Digitales".split(" ")
 const ACCENT_FROM = 3 // "Soluciones Digitales" gets the accent color
-
-const HIVE_CLASS =
-  "h-full w-full object-contain [mask-image:radial-gradient(closest-side,black_70%,transparent)] pointer-events-none select-none"
 
 export function HeroSection() {
   const shouldReduceMotion = useReducedMotion()
@@ -81,30 +79,14 @@ export function HeroSection() {
             </motion.div>
           </div>
 
-          {/* 3D loop rendered on the exact page white; the mask fades its edges into the dot grid */}
+          {/* Real-time 3D: loose parts click together into a robot that waves and follows the pointer */}
           <motion.div
             initial={shouldReduceMotion ? undefined : { opacity: 0, scale: 0.96 }}
             animate={shouldReduceMotion ? undefined : { opacity: 1, scale: 1 }}
             transition={{ duration: 0.9, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-5 relative aspect-square w-full max-w-md mx-auto lg:max-w-none lg:scale-125 lg:translate-x-6"
+            className="lg:col-span-5 relative aspect-square w-full max-w-md mx-auto lg:max-w-none lg:scale-110 lg:translate-x-6"
           >
-            {shouldReduceMotion ? (
-              <img src="/video/hero_hive-poster.jpg" alt="" aria-hidden="true" className={HIVE_CLASS} />
-            ) : (
-              <video
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                poster="/video/hero_hive-poster.jpg"
-                aria-hidden="true"
-                className={HIVE_CLASS}
-              >
-                <source src="/video/hero_hive.webm" type="video/webm" />
-                <source src="/video/hero_hive.mp4" type="video/mp4" />
-              </video>
-            )}
+            <HeroAssembly className="h-full w-full" />
           </motion.div>
         </div>
       </div>

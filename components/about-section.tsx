@@ -1,6 +1,9 @@
 import { Card, CardContent } from "@/components/ui/card"
 import { CheckCircle, Users, Target, Award, Rocket } from "lucide-react"
 
+const MARK_CLASS =
+  "h-full w-full object-contain [mask-image:radial-gradient(closest-side,black_72%,transparent)] pointer-events-none select-none"
+
 export function AboutSection() {
   return (
     <section id="about" className="py-20 bg-background">
@@ -8,6 +11,21 @@ export function AboutSection() {
         <div className="max-w-6xl mx-auto">
           {/* Section Header */}
           <div className="text-center mb-16">
+            <div aria-hidden="true" className="mx-auto -mt-8 mb-0 h-44 w-44 md:h-60 md:w-60">
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                poster="/video/logo_monograma-poster.jpg"
+                className={`${MARK_CLASS} motion-reduce:hidden`}
+              >
+                <source src="/video/logo_monograma.webm" type="video/webm" />
+                <source src="/video/logo_monograma.mp4" type="video/mp4" />
+              </video>
+              <img src="/video/logo_monograma-poster.jpg" alt="" className={`${MARK_CLASS} hidden motion-reduce:block`} />
+            </div>
             <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">Quiénes Somos</h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto text-pretty">
               Hexar Solutions es una empresa especializada en el desarrollo de soluciones tecnológicas integrales
