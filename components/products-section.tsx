@@ -257,7 +257,7 @@ const PRODUCTS_SCHEMA = {
       applicationCategory: product.schema.applicationCategory,
       operatingSystem: product.schema.operatingSystem,
       sameAs: product.links.map((l) => l.href),
-      publisher: { "@type": "Organization", name: "Hexar Solutions", url: "https://www.hexar.com.ar" },
+      publisher: { "@type": "Organization", name: "Hexar Solutions", legalName: "Hexar Software Factory S.R.L.", foundingDate: "2025", url: "https://www.hexar.com.ar" },
     },
   })),
 }
