@@ -24,7 +24,7 @@ export function Footer() {
             {/* Company Info */}
             <div className="lg:col-span-2">
               <h3 className="text-2xl font-bold mb-4">
-                Hexar <span className="text-accent">Software Factory</span>
+                Hexar <span className="text-accent">Solutions</span>
               </h3>
               <p className="text-primary-foreground/80 mb-6 max-w-md text-pretty">
                 Transformamos ideas en soluciones digitales. Somos tu socio tecnológico especializado en desarrollo de
@@ -127,7 +127,7 @@ export function Footer() {
         <div className="border-t border-primary-foreground/20 py-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="text-primary-foreground/60 text-sm">
-              © 2026 Hexar Software Factory. Todos los derechos reservados.
+              © 2026 Hexar Solutions. Todos los derechos reservados.
             </div>
 
             <div className="flex items-center gap-6">

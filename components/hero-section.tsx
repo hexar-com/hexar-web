@@ -53,7 +53,7 @@ export function HeroSection() {
               transition={{ duration: 0.6, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
               className="text-lg md:text-xl text-muted-foreground mb-8 text-pretty max-w-xl"
             >
-              Somos Hexar Software Factory, tu socio tecnológico especializado en crear soluciones de software
+              Somos Hexar Solutions, tu socio tecnológico especializado en crear soluciones de software
               completas, gestionar bases de datos y desarrollar productos innovadores que impulsan tu negocio.
             </motion.p>
 

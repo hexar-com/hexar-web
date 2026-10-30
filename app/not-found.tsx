@@ -29,15 +29,14 @@ export default function NotFound() {
         {/* Logo */}
         <Link href="/" className="inline-flex items-center gap-3 mb-14 group">
           <Image
-            src="/images/hexar-logo.png"
+            src="/images/hexar-mark.svg"
             alt="Hexar"
-            width={0}
-            height={0}
-            sizes="48px"
-            className="w-10 h-auto"
+            width={40}
+            height={40}
+            className="w-10 h-10"
           />
           <span className="text-xl font-bold text-primary">
-            Hexar <span className="text-accent">Software Factory</span>
+            Hexar <span className="text-accent">Solutions</span>
           </span>
         </Link>
 

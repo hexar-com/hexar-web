@@ -15,12 +15,16 @@ const spaceGrotesk = Space_Grotesk({
 })
 
 export const metadata: Metadata = {
-  title: "Hexar Software Factory - Soluciones de Software Profesionales",
+  title: "Hexar Solutions - Soluciones de Software Profesionales",
   description:
     "Creamos soluciones de software completas, gestionamos bases de datos y desarrollamos productos innovadores. Tu socio tecnológico de confianza.",
-  generator: "Hexar Software Factory",
+  generator: "Hexar Solutions",
   icons: {
-    icon: "/images/favicon.ico",
+    icon: [
+      { url: "/images/favicon.ico", sizes: "any" },
+      { url: "/images/icon.svg", type: "image/svg+xml" },
+    ],
+    apple: "/images/apple-icon.png",
   },
 }
 
@@ -33,9 +37,9 @@ export default function RootLayout({
     <html lang="es">
       <head>
         <title>Hexar - Inicio</title>
-        <meta name="description" content="Hexar Software Factory - Soluciones de Software Profesionales" />
-        <meta name="keywords" content="Hexar, Software Factory, Desarrollo de Software, Soluciones de Software, Gestión de Bases de Datos, Productos de Software, Innovación Tecnológica" />
-        <meta name="author" content="Hexar Software Factory" />
+        <meta name="description" content="Hexar Solutions - Soluciones de Software Profesionales" />
+        <meta name="keywords" content="Hexar, Hexar Solutions, Desarrollo de Software, Soluciones de Software, Gestión de Bases de Datos, Productos de Software, Innovación Tecnológica" />
+        <meta name="author" content="Hexar Solutions" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable} ${spaceGrotesk.variable}`}>

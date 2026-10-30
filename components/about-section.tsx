@@ -10,7 +10,7 @@ export function AboutSection() {
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">Quiénes Somos</h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto text-pretty">
-              Hexar Software Factory es una empresa especializada en el desarrollo de soluciones tecnológicas integrales
+              Hexar Solutions es una empresa especializada en el desarrollo de soluciones tecnológicas integrales
               que transforman la manera en que las empresas operan y crecen.
             </p>
           </div>

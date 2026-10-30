@@ -23,12 +23,12 @@ export function Header() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <Link className='flex items-center' href="/" >
-              <Image className=' w-10 md:w-16' src="/images/hexar-logo.png" alt="Hexar" width={0}
-                height={0}
-                sizes="60vw" />
+            <Link className='flex items-center gap-2.5' href="/" >
+              <Image className='w-9 h-9 md:w-10 md:h-10' src="/images/hexar-mark.svg" alt="Hexar" width={40}
+                height={40}
+                priority />
               <h1 className="text-2xl font-bold text-primary">
-                Hexar <span className="text-accent">Software Factory</span>
+                Hexar <span className="text-accent">Solutions</span>
               </h1>
             </Link>
           </div>
