@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { ArrowRight, ChevronDown, ExternalLink, Users, X, Zap } from "lucide-react"
 import Image from "next/image"
 
-type Brand = "velzo" | "hexar" | "archynt"
+type Brand = "velzo" | "hexar" | "archynt" | "cggraphic"
 
 interface ProductLink {
   label: string
@@ -185,6 +185,49 @@ const PRODUCTS: Product[] = [
     ],
     schema: { applicationCategory: "DeveloperApplication", operatingSystem: "Web, Docker, Kubernetes" },
   },
+  {
+    id: "cg-graphic",
+    title: "CG Graphic",
+    description:
+      "Catálogo privado B2B con pedidos online para una empresa de comunicación visual: acceso por invitación, productos configurables y gestión de pedidos sin cobro online.",
+    status: "Activo",
+    users: "Clientes corporativos",
+    features: ["Acceso con código por email", "Catálogos exclusivos por empresa", "Configurador de medidas y materiales", "Ofertas por link", "App instalable (PWA)"],
+    category: "E-commerce B2B",
+    link: "https://cg-graphic.com.ar",
+    linkLabel: "CG Graphic: comunicación visual y pedidos online",
+    logo: "/images/cg-graphic-logo.png",
+    brand: "cggraphic",
+    tagline: "Catálogo privado y pedidos online para los clientes corporativos de una empresa de señalética y comunicación visual.",
+    about: [
+      "CG Graphic necesitaba que sus clientes corporativos pidieran señalética y piezas gráficas sin llamadas ni planillas, pero sin exponer su catálogo ni sus precios. Construimos una tienda privada: solo entran los emails autorizados, con un código que llega por correo, y cada empresa ve únicamente los productos que le corresponden.",
+      "El cliente configura cada pieza —modelo, medida, material, ubicación y archivo de diseño—, ve el precio estimado al instante y envía el pedido. CG Graphic lo recibe con todas las especificaciones, lo confirma y factura por fuera; también puede armar carritos y mandarlos al cliente como oferta por link.",
+    ],
+    steps: [
+      "El cliente solicita acceso y CG Graphic lo aprueba",
+      "Ingresa con un código de un solo uso enviado por email",
+      "Configura medidas, material y diseño de cada pieza",
+      "Envía el pedido y sigue su estado desde Mis pedidos",
+    ],
+    details: [
+      { title: "Acceso solo por invitación", text: "Código de 6 dígitos con vencimiento, límites de intentos y bloqueo del catálogo del lado del servidor en cada solicitud, incluidas las APIs." },
+      { title: "Catálogos exclusivos", text: "Productos visibles solo para la empresa asignada: catálogo, búsqueda, ficha, carrito y checkout lo respetan." },
+      { title: "Configurador de productos", text: "Más de 100 productos y 660 variantes con selectores por modelo, medida y material, precio por unidad o por m² y carga de archivos." },
+      { title: "Búsqueda y filtros", text: "Sugerencias en vivo, filtros por sección, categoría, medida, material y precio, y tolerancia a acentos y medidas escritas de distintas formas." },
+      { title: "Gestión para el equipo", text: "Panel de accesos, estados de pedido, ofertas por link, ajuste de precios en bloque y emails automáticos al cliente y al administrador." },
+      { title: "App instalable", text: "PWA para Android, iOS y escritorio, sin guardar datos privados en el dispositivo." },
+    ],
+    audience: ["Empresas de comunicación visual, imprentas y fabricantes que venden a clientes corporativos", "Negocios que quieren tomar pedidos online sin publicar precios ni cobrar en el sitio"],
+    facts: [
+      { title: "100+", text: "productos configurables" },
+      { title: "660+", text: "variantes" },
+      { title: "Sin contraseñas", text: "acceso con código por email" },
+      { title: "PWA", text: "Android, iOS y escritorio" },
+    ],
+    stack: ["WordPress", "WooCommerce", "Plugin propio en PHP", "PWA"],
+    links: [],
+    schema: { applicationCategory: "BusinessApplication", operatingSystem: "Web, Android, iOS" },
+  },
 ]
 
 // Paleta por tarjeta oscura. "archynt" usa los colores de su design system
@@ -209,6 +252,17 @@ const darkThemes = {
     border: "border-[oklch(0.66_0.19_258/0.4)]",
     hover: "hover:bg-[oklch(0.66_0.19_258/0.15)] hover:text-[oklch(0.82_0.13_210)]",
     cta: "bg-[oklch(0.66_0.19_258)] hover:bg-[oklch(0.66_0.19_258/0.9)] text-[oklch(0.99_0.01_250)]",
+  },
+  // CG Graphic: grafito + naranja de marca, de cg-graphic/wp-content/themes/cg-graphic/assets/css/main.css.
+  cggraphic: {
+    card: "bg-[#15171a] ring-1 ring-[#f58634]/30 hover:shadow-[0_0_32px_rgba(245,134,52,0.3)]",
+    logoBg: "bg-[#f58634]/15",
+    text: "text-[#faf8f5]",
+    accentText: "text-[#f58634]",
+    accentBg: "bg-[#f58634]/15",
+    border: "border-[#f58634]/40",
+    hover: "hover:bg-[#f58634]/15 hover:text-[#f58634]",
+    cta: "bg-[#f58634] hover:bg-[#f58634]/90 text-[#17191c]",
   },
 } as const
 
@@ -239,6 +293,15 @@ const panelThemes: Record<Brand, { panel: string; muted: string; accentText: str
     divider: "border-[oklch(0.66_0.19_258/0.3)]",
     step: "bg-[oklch(0.66_0.19_258)] text-[oklch(0.99_0.01_250)]",
     cta: "bg-[oklch(0.66_0.19_258)] hover:bg-[oklch(0.66_0.19_258/0.9)] text-[oklch(0.99_0.01_250)]",
+  },
+  cggraphic: {
+    panel: "bg-[#15171a] text-[#faf8f5] ring-1 ring-[#f58634]/30 shadow-[0_0_48px_rgba(245,134,52,0.2)]",
+    muted: "text-[#faf8f5]/70",
+    accentText: "text-[#f58634]",
+    chip: "bg-[#f58634]/15 text-[#f58634]",
+    divider: "border-[#f58634]/25",
+    step: "bg-[#f58634] text-[#17191c]",
+    cta: "bg-[#f58634] hover:bg-[#f58634]/90 text-[#17191c]",
   },
 }
 
