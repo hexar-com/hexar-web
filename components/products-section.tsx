@@ -524,7 +524,7 @@ export function ProductsSection() {
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">Nuestros Productos</h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto text-pretty">
-              Productos de software desarrollados internamente que están activos en producción, sirviendo a empresas y
+              Productos de software desarrollados por Hexar que están activos en producción, sirviendo a empresas y
               usuarios reales.
             </p>
           </div>
